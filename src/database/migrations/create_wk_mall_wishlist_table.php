@@ -9,9 +9,9 @@ class CreateWkMallWishlistTable extends Migration
     public function up()
     {
         Schema::create(config('wk-core.table.mall-wishlist.items'), function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('stock_id');
+            $table->uuid('id');
+            $table->uuid('user_id');
+            $table->uuid('stock_id');
 
             $table->timestampsTz();
 
@@ -19,6 +19,8 @@ class CreateWkMallWishlistTable extends Migration
                   ->on(config('wk-core.table.user'))
                   ->onDelete('cascade')
                   ->onUpdate('cascade');
+
+            $table->primary('id');
         });
         if (config('wk-mall-wishlist.onoff.mall-shelf') &&
             Schema::hasTable(config('wk-core.table.mall-shelf.stocks'))) {

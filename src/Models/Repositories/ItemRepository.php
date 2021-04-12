@@ -82,11 +82,11 @@ class ItemRepository extends Repository
 
     /**
      * @param String $code
-     * @param Int    $user_id
-     * @param Int    $stock_id
+     * @param String $user_id
+     * @param String $stock_id
      * @return Array
      */
-    public function add(String $code, Int $user_id, Int $stock_id)
+    public function add(String $code, String $user_id, String $stock_id)
     {
         $record = $this->where('user_id', '=', $user_id)
                        ->where('stock_id', '=', $stock_id)
@@ -104,11 +104,11 @@ class ItemRepository extends Repository
     }
 
     /**
-     * @param Int   $user_id
-     * @param Array $stock_id
+     * @param String $user_id
+     * @param Array  $stock_id
      * @return Boolean
      */
-    public function remove(Int $user_id, Array $stock_id)
+    public function remove(String $user_id, Array $stock_id)
     {
         return $this->where('user_id', '=', $user_id)
                     ->whereIn('stock_id', $stock_id)

@@ -2,13 +2,10 @@
 
 namespace WalkerChiu\MallWishlist\Models\Entities;
 
-use Illuminate\Database\Eloquent\Model;
-use WalkerChiu\Core\Models\Entities\DateTrait;
+use Illuminate\Database\Eloquent\UuidModel;
 
-class Item extends Model
+class Item extends UuidModel
 {
-    use DateTrait;
-
     protected $fillable = [
         'user_id',
         'stock_id'

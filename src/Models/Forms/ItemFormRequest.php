@@ -16,7 +16,7 @@ class ItemFormRequest extends FormRequest
         $request = Request::instance();
         $data = $this->all();
         if ($request->isMethod('put') && empty($data['id']) && isset($request->id)) {
-            $data['id'] = (int) $request->id;
+            $data['id'] = (string) $request->id;
             $this->getInputSource()->replace($data);
         }
 
@@ -39,13 +39,13 @@ class ItemFormRequest extends FormRequest
     public function rules()
     {
         $rules = [
-            'user_id'  => ['required','integer','min:1','exists:'.config('wk-core.table.user').',id'],
-            'stock_id' => ['required','integer','min:1','exists:'.config('wk-core.table.mall-shelf.stocks').',id']
+            'user_id'  => ['required','string','exists:'.config('wk-core.table.user').',id'],
+            'stock_id' => ['required','string','exists:'.config('wk-core.table.mall-shelf.stocks').',id']
         ];
 
         $request = Request::instance();
         if ($request->isMethod('put') && isset($request->id)) {
-            $rules = array_merge($rules, ['id' => ['required','integer','min:1','exists:'.config('wk-core.table.mall-wishlist.items').',id']]);
+            $rules = array_merge($rules, ['id' => ['required','string','exists:'.config('wk-core.table.mall-wishlist.items').',id']]);
         }
 
         return $rules;
@@ -60,16 +60,13 @@ class ItemFormRequest extends FormRequest
     {
         return [
             'id.required'       => trans('php-core::validation.required'),
-            'id.integer'        => trans('php-core::validation.integer'),
-            'id.min'            => trans('php-core::validation.min'),
+            'id.string'         => trans('php-core::validation.string'),
             'id.exists'         => trans('php-core::validation.exists'),
             'user_id.required'  => trans('php-core::validation.required'),
-            'user_id.integer'   => trans('php-core::validation.integer'),
-            'user_id.min'       => trans('php-core::validation.min'),
+            'user_id.string'    => trans('php-core::validation.string'),
             'user_id.exists'    => trans('php-core::validation.exists'),
             'stock_id.required' => trans('php-core::validation.required'),
-            'stock_id.integer'  => trans('php-core::validation.integer'),
-            'stock_id.min'      => trans('php-core::validation.min'),
+            'stock_id.string'   => trans('php-core::validation.string'),
             'stock_id.exists'   => trans('php-core::validation.exists')
         ];
     }

@@ -14,10 +14,10 @@ class WishlistService
     }
 
     /**
-     * @param  Int $user_id
+     * @param  String $user_id
      * @return Boolean
      */
-    public function clear($user_id)
+    public function clear(String $user_id)
     {
         return $this->repository->where('user_id', '=', $user_id)
                                 ->delete();
