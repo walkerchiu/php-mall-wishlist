@@ -21,12 +21,13 @@ class ItemRepository extends Repository
     }
 
     /**
-     * @param Array $data
-     * @param Int   $page
-     * @param Int   $nums per page
-     * @return Array
+     * @param Array   $data
+     * @param Int     $page
+     * @param Int     $nums per page
+     * @param Boolean $toArray
+     * @return Array|Collection
      */
-    public function list(String $code, Array $data, $page = null, $nums = null)
+    public function list(String $code, Array $data, $page = null, $nums = null, $toArray = true)
     {
         $this->assertForPagination($page, $nums);
 
@@ -49,12 +50,16 @@ class ItemRepository extends Repository
                             ->when(is_integer($page) && is_integer($nums), function ($query) use ($page, $nums) {
                                 return $query->forPage($page, $nums);
                             });
-        $list = [];
-        foreach ($records as $record) {
-            array_push($list, $this->show($record, $code));
-        }
+        if ($toArray) {
+            $list = [];
+            foreach ($records as $record) {
+                array_push($list, $this->show($record, $code));
+            }
 
-        return $list;
+            return $list;
+        } else {
+            return $records;
+        }
     }
 
     /**
